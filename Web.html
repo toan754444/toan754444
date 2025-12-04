@@ -1,1 +1,119 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>khongtruong</title>
+<style>
+  body {
+    background: #000;
+    color: #0f0;
+    font-family: monospace;
+    padding: 20px;
+  }
+  #log {
+    height: 60vh;
+    overflow-y: auto;
+    border: 1px solid #0f0;
+    padding: 12px;
+    margin-top: 20px;
+    white-space: pre-line;
+    font-size: 14px;
+  }
+  #progress {
+    width: 100%;
+    background: #003300;
+    height: 12px;
+    margin-top: 15px;
+    border: 1px solid #0f0;
+  }
+  #bar {
+    height: 100%;
+    width: 0%;
+    background: #00ff00;
+  }
+  #final {
+    display: none;
+    color: #ff4d4d;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 30px;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .note {
+    font-size: 13px;
+    color: #bbb;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Đang khởi tạo hệ thống...</h1>
+
+<div id="progress"><div id="bar"></div></div>
+
+<div id="log">[SYSTEM] Bắt đầu quét thiết bị...</div>
+
+<div id="final">
+    ⚠️ TẤT CẢ THÔNG TIN CỦA BẠN ĐÃ BỊ ĐÁNH CẮP ⚠️<br><br>
+    • Dữ liệu thiết bị<br>
+    • Mật khẩu lưu trữ<br>
+    • Ảnh & tài liệu<br>
+    • Token đăng nhập<br><br>
+    Tất cả đã được chuyển đến máy chủ: <span style="color:white;">khongtruong-server</span>
+    <div class="note"></div>
+</div>
+
+<script>
+// ----- Tạo log giả giống code 1 -----
+const log = document.getElementById("log");
+const bar = document.getElementById("bar");
+
+const fakeLines = [
+  "Đang quét tệp hệ thống...",
+  "Đang mở phiên thu thập dữ liệu...",
+  "Đang truy xuất cấu hình thiết bị...",
+  "Đang phân tích thư mục...",
+  "Đang thiết lập kết nối máy chủ...",
+  "Đang truyền dữ liệu 1/4...",
+  "Đang truyền dữ liệu 2/4...",
+  "Đang truyền dữ liệu 3/4...",
+  "Đang truyền dữ liệu 4/4...",
+  "Đang hoàn tất tiến trình...",
+];
+
+let i = 0;
+function addLine() {
+  if (i < fakeLines.length) {
+    log.innerHTML += "\n" + fakeLines[i];
+    log.scrollTop = log.scrollHeight;
+    i++;
+    setTimeout(addLine, 300 + Math.random() * 300);
+  }
+}
+addLine();
+
+// ----- Thanh progress chạy 5–7 giây -----
+let total = 5000 + Math.random() * 2000;
+let start = Date.now();
+
+let progressTimer = setInterval(() => {
+  let pct = Math.min(100, ((Date.now() - start) / total) * 100);
+  bar.style.width = pct + "%";
+
+  if (pct >= 100) {
+    clearInterval(progressTimer);
+
+    // Ẩn log + progress và hiện cảnh báo như code 2
+    document.getElementById("log").style.display = "none";
+    document.getElementById("progress").style.display = "none";
+    document.getElementById("final").style.display = "block";
+  }
+}, 60);
+</script>
+
+</body>
+</html>
 
